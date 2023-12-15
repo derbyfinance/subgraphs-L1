@@ -1,0 +1,71 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Controller
+    network: goerli
+    source:
+      address: "0xa4EA3fba92C893A3e824aD75CA576852E269520f"
+      abi: Controller
+      startBlock: 10205456
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AddProtocol
+        - AddVault
+      abis:
+        - name: Controller
+          file: ./abis/Controller.json
+      eventHandlers:
+        - event: AddProtocol(string,uint256,address,address,address,address,uint256)
+          handler: handleAddProtocol
+        - event: AddVault(uint256,string,uint256,string,string)
+          handler: handleAddVault
+      file: ./src/controller.ts
+  - kind: ethereum
+    name: DerbyGoerliUSDC
+    network: goerli
+    source:
+      address: "0x2763eFAb9945A05423FF15040fAbB93C9692D020"
+      abi: DerbyGoerliUSDC
+      startBlock: 10205460
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Deposit
+        - DepositInProtocol
+        - LastPrices
+        - PushedRewardsToGame
+        - Rebalance
+        - Transfer
+        - Withdraw
+        - WithdrawFromProtocol
+      abis:
+        - name: DerbyGoerliUSDC
+          file: ./abis/DerbyGoerliUSDC.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Deposit(address,uint256,uint256)
+          handler: handleDeposit
+        - event: DepositInProtocol(uint256,uint256)
+          handler: handleDepositInProtocol
+        - event: LastPrices(uint256,uint256,uint256)
+          handler: handleLastPrices
+        - event: PushedRewardsToGame(uint256,uint32,int256[])
+          handler: handlePushedRewardsToGame
+        - event: Rebalance(uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Withdraw(address,uint256,uint256)
+          handler: handleWithdraw
+        - event: WithdrawFromProtocol(uint256,uint256)
+          handler: handleWithdrawFromProtocol
+      file: ./src/derby-goerli-usdc.ts

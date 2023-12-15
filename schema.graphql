@@ -1,0 +1,111 @@
+type AddProtocol @entity(immutable: true) {
+  id: Bytes!
+  name: String! # string
+  vaultNumber: BigInt! # uint256
+  provider: Bytes! # address
+  protocolLPToken: Bytes! # address
+  underlying: Bytes! # address
+  govToken: Bytes! # address
+  protocolNumber: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type AddVault @entity(immutable: true) {
+  id: Bytes!
+  vaultNumber: BigInt! # uint256
+  vaultName: String! # string
+  chainId: BigInt! # uint256
+  category: String! # string
+  coin: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type Approval @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  spender: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Deposit @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  amount: BigInt! # uint256
+  shares: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DepositInProtocol @entity(immutable: true) {
+  id: Bytes!
+  protocolNum: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LastPrices @entity(immutable: true) {
+  id: Bytes!
+  protocolNum: BigInt! # uint256
+  rebalancingPeriod: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PushedRewardsToGame @entity(immutable: true) {
+  id: Bytes!
+  vaultNumber: BigInt! # uint256
+  chain: BigInt! # uint32
+  rewards: [BigInt!]! # int256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Rebalance @entity(immutable: true) {
+  id: Bytes!
+  vaultNumber: BigInt! # uint256
+  rebalancingPeriod: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Withdraw @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  amount: BigInt! # uint256
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WithdrawFromProtocol @entity(immutable: true) {
+  id: Bytes!
+  protocolNum: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

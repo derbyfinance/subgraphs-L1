@@ -1,0 +1,11 @@
+{
+  "goerli": {
+    "Controller": {
+      "address": "0xa4EA3fba92C893A3e824aD75CA576852E269520f",
+      "startBlock": 10205456
+    },
+    "DerbyGoerliUSDC": {
+      "address": "0x2763eFAb9945A05423FF15040fAbB93C9692D020"
+    }
+  }
+}
