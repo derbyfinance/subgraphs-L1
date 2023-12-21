@@ -1,3 +1,4 @@
+import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   Approval as ApprovalEvent,
   Deposit as DepositEvent,
@@ -69,7 +70,12 @@ export function handleLastPrices(event: LastPricesEvent): void {
   let entity = new LastPrices(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity.protocolNum = event.params.protocolNum
+  let protocolNumBigInt: BigInt = event.params.protocolNum
+
+  // Convert BigInt to Bytes
+  let protocolNumBytes: Bytes = Bytes.fromHexString(protocolNumBigInt.toHexString())
+
+  entity.protocolNum = protocolNumBytes
   entity.rebalancingPeriod = event.params.rebalancingPeriod
   entity.price = event.params.price
 

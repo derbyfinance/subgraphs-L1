@@ -1,3 +1,4 @@
+import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   AddProtocol as AddProtocolEvent,
   AddVault as AddVaultEvent
@@ -9,7 +10,10 @@ export function handleAddProtocol(event: AddProtocolEvent): void {
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.name = event.params.name
-  entity.vaultNumber = event.params.vaultNumber
+  let vaultNumberBigInt: BigInt = event.params.vaultNumber
+  // Convert BigInt to Bytes
+  let vaultNumberBytes: Bytes = Bytes.fromHexString(vaultNumberBigInt.toHexString())
+  entity.vaultNumber = vaultNumberBytes
   entity.provider = event.params.provider
   entity.protocolLPToken = event.params.protocolLPToken
   entity.underlying = event.params.underlying

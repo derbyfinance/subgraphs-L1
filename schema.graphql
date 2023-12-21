@@ -1,7 +1,7 @@
 type AddProtocol @entity(immutable: true) {
   id: Bytes!
   name: String! # string
-  vaultNumber: BigInt! # uint256
+  vaultNumber: AddVault! # uint256
   provider: Bytes! # address
   protocolLPToken: Bytes! # address
   underlying: Bytes! # address
@@ -10,6 +10,7 @@ type AddProtocol @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  lastPrices: [LastPrices]! @derivedFrom(field: "protocolNum")
 }
 
 type AddVault @entity(immutable: true) {
@@ -22,7 +23,32 @@ type AddVault @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  rebalancingPeriod: BigInt! # uint256
+  protocols: [AddProtocol]! @derivedFrom(field: "vaultNumber")
+  vaultRewards: [VaultRewards!] @derivedFrom(field: "vault")
+  exchangeRates: [ExchangeRate!] @derivedFrom(field: "vault")
 }
+
+type ExchangeRate @entity(immutable: true) {
+  id: ID! # vaultNumber + rebalancingPeriod in HEX
+  rebalancingPeriod: BigInt! # uint256
+  vault: AddVault! # uint256
+  exchangeRate: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type VaultRewards @entity(immutable: true) {
+  id: ID! # vaultNumber + rebalancingPeriod in HEX
+  rebalancingPeriod: BigInt! # uint256
+  vault: AddVault! # uint256
+  rewards: [BigInt!]! # int256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
 type Approval @entity(immutable: true) {
   id: Bytes!
   owner: Bytes! # address
@@ -54,7 +80,7 @@ type DepositInProtocol @entity(immutable: true) {
 
 type LastPrices @entity(immutable: true) {
   id: Bytes!
-  protocolNum: BigInt! # uint256
+  protocolNum: AddProtocol! # uint256
   rebalancingPeriod: BigInt! # uint256
   price: BigInt! # uint256
   blockNumber: BigInt!
